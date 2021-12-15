@@ -77,7 +77,7 @@ function addTask() {
 }
 createButton.addEventListener("click", addTask);
 
-function doneTask(event) {
+function updateTaskHandler(event) {
   const elemId = event.target.dataset.id;
   const checkBoxElem = document.querySelector(`[data-id='${elemId}']`);
 
@@ -95,4 +95,4 @@ function doneTask(event) {
   return null;
 }
 
-listElem.addEventListener("click", doneTask);
+listElem.addEventListener("click", updateTaskHandler);
