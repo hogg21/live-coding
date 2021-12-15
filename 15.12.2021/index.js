@@ -1,5 +1,4 @@
 const listElem = document.querySelector(".list");
-
 const tasks = [
   { id: 1, text: "Buy milk", done: false },
   { id: 2, text: "Pick up Tom from airport", done: false },
@@ -59,13 +58,37 @@ renderTasks(tasks);
 // 1.find task by id
 // 2.update task
 // 3.re-render
-function updateTaskHandler(event) {
-  console.log(event.target.classList.contains("list__item-checkbox"));
-  console.log(event.target.getAttribute("type"));
-  if (!event.target.classList.contains("list__item-checkbox")) {
-    return null;
+const inputField = document.querySelector(".task-input");
+const createBtn = document.querySelector(".create-task-btn");
+function addTask() {
+  const inputValue = inputField.value;
+  if (inputValue !== "") {
+    tasks.push({ text: inputValue, done: false, id: (tasks.id += 1) });
   }
-  const { id } = event.target.dataset;
+  inputField.value = "";
+  renderTasks(tasks);
+}
+createBtn.addEventListener("click", addTask);
+function updateTaskHandler(event) {
+  const { id } = event.target.dataset.id;
   // TODO
+  console.log(event.target);
+  console.log(tasks);
+  if (
+    tasks.find((task) => Number(task.id) === Number(event.target.dataset.id))
+      .done
+  ) {
+    tasks.find(
+      (task) => Number(task.id) === Number(event.target.dataset.id)
+    ).done = false;
+  } else {
+    tasks.find(
+      (task) => Number(task.id) === Number(event.target.dataset.id)
+    ).done = true;
+  }
+  listElem.innerHTML = "";
+  renderTasks(tasks);
+
+  return null;
 }
 listElem.addEventListener("click", updateTaskHandler);
